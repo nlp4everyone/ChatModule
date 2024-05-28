@@ -4,7 +4,12 @@ from ai_modules.chatmodel_modules import BaseChatModel
 from system_component.system_logging import Logger
 
 class OpenChatModel(BaseChatModel):
-    def __init__(self, model_name: Union[str, None] = "zephyr",temperature: float = 0.8,max_tokens :int = 512):
+    def __init__(self,
+                 model_name: Union[str, None] = "zephyr",
+                 temperature: float = 0.8,
+                 max_tokens :int = 512
+                 ):
+        """Define embedding service with specified params"""
         super().__init__(temperature = temperature,max_tokens = max_tokens)
         # Set model
         self._model_name = model_name

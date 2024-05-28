@@ -3,6 +3,7 @@ from typing import List
 
 class BaseEmbedding():
     def __init__(self,batch_size: int = 10,max_length: int = 1024):
+        """Define general method for embedding service"""
         # Define variable
         self.max_length = max_length
         self.batch_size = batch_size\

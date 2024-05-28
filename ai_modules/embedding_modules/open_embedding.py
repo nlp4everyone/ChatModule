@@ -13,7 +13,14 @@ class OpenEmbeddingProvider(StrEnum):
 
 
 class OpenEmbedding(BaseEmbedding):
-    def __init__(self,model_name: Optional[str] = None,service_name: OpenEmbeddingProvider = OpenEmbeddingProvider.FastEmbed,batch_size: int = 10,max_length: int = 1024, embedding_model_folder = params.embedding_model_folder):
+    def __init__(self,
+                 model_name: Optional[str] = None,
+                 service_name: OpenEmbeddingProvider = OpenEmbeddingProvider.FastEmbed,
+                 batch_size: int = 10,
+                 max_length: int = 1024,
+                 embedding_model_folder = params.embedding_model_folder):
+        """Define embedding service with specified params"""
+
         super().__init__(batch_size = batch_size,max_length= max_length)
         # Define variable
         self._embedding_model_folder = embedding_model_folder

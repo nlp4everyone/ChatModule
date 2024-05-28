@@ -1,5 +1,4 @@
 from ai_modules.chatmodel_modules import ServiceChatModel
+from ai_modules.embedding_modules import ServiceEmbedding
 
-service_chatmodel = ServiceChatModel()
-res = service_chatmodel.chat("Hello")
-print(res)
+embedding_service = ServiceEmbedding(service_name="VOYAGE")

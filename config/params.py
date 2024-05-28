@@ -36,7 +36,7 @@ supported_services = {
         "KEY" : AI21_KEY
     },
     "ANTHROPIC":{
-        "CHAT_MODELS":["claude-3-opus-20240229","claude-3-sonnet-20240229","claude-3-haiku-20240307"],
+        "CHAT_MODELS":["claude-3-haiku-20240307","claude-3-sonnet-20240229","claude-3-opus-20240229",],
         "EMBBEDDING_MODELS":[],
         "KEY": ANTHROPIC_KEY
         # List models: https://docs.anthropic.com/claude/docs/models-overview
@@ -49,7 +49,7 @@ supported_services = {
     "COHERE":{
         "CHAT_MODELS":["command-light","command","command-r","command-r-plus"],
         # List models: https://docs.cohere.com/docs/command-beta
-        "EMBBEDDING_MODELS":["embed-english-v3.0","embed-multilingual-v3.0","embed-english-light-v3.0","embed-multilingual-light-v3.0"],
+        "EMBBEDDING_MODELS":["embed-english-light-v3.0","embed-multilingual-light-v3.0","embed-english-v3.0","embed-multilingual-v3.0",],
         # List embbeding: https://docs.cohere.com/reference/embed
         "KEY": COHERE_KEY
 
@@ -60,7 +60,7 @@ supported_services = {
         "KEY": GRADIENT_KEY
     },
     "GROQ":{
-        "CHAT_MODELS":["llama3-70b-8192","mixtral-8x7b-32768","gemma-7b-it","llama3-8b-8192"],
+        "CHAT_MODELS":["llama3-8b-8192","gemma-7b-it","mixtral-8x7b-32768","llama3-70b-8192"],
         "EMBBEDDING_MODELS":[],
         "KEY": GROQ_KEY
     },
@@ -77,14 +77,14 @@ supported_services = {
         "KEY": LLAMAAPI_KEY
     },
     "OPENAI":{
-        "CHAT_MODELS":["gpt-4-turbo-2024-04-09","gpt-4-0125-preview","gpt-4-32k","gpt-4","gpt-3.5-turbo-0125","gpt-3.5-turbo-instruct"],
-        "EMBBEDDING_MODELS":["text-embedding-3-large","text-embedding-3-small","text-embedding-ada-002"],
+        "CHAT_MODELS":["gpt-3.5-turbo-0125","gpt-3.5-turbo-instruct","gpt-4","gpt-4-32k","gpt-4-0125-preview","gpt-4-turbo-2024-04-09",],
+        "EMBBEDDING_MODELS":["text-embedding-ada-002","text-embedding-3-small","text-embedding-3-large"],
         "KEY": OPENAI_KEY
         # List model: https://platform.openai.com/docs/models/continuous-model-upgrades
         # List embedding: https://platform.openai.com/docs/models/embeddings
     },
     "PERPLEXITY":{
-        "CHAT_MODELS":["llama-2-13b-chat","llama-2-70b-chat","mistral-7b-instruct","pplx-7b-chat-alpha","pplx-70b-chat-alpha"],
+        "CHAT_MODELS":["mistral-7b-instruct","pplx-7b-chat-alpha","llama-2-13b-chat","llama-2-70b-chat","pplx-70b-chat-alpha"],
         "EMBBEDDING_MODELS":[],
         "KEY": PERPLEXITY_KEY
         # List model: https://docs.perplexity.ai/docs/model-cards
@@ -92,13 +92,13 @@ supported_services = {
     "TOGETHER":{
         "CHAT_MODELS":["zero-one-ai/Yi-34B-Chat","cognitivecomputations/dolphin-2.5-mixtral-8x7b","mistralai/Mistral-7B-Instruct-v0.2","NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO","Qwen/Qwen1.5-32B-Chat"],
         # List model: https://docs.together.ai/docs/inference-models
-        "EMBBEDDING_MODELS":["togethercomputer/m2-bert-80M-8k-retrieval","togethercomputer/m2-bert-80M-32k-retrieval","BAAI/bge-large-en-v1.5","BAAI/bge-base-en-v1.5","sentence-transformers/msmarco-bert-base-dot-v5"],
+        "EMBBEDDING_MODELS":["BAAI/bge-base-en-v1.5","BAAI/bge-large-en-v1.5","togethercomputer/m2-bert-80M-8k-retrieval","togethercomputer/m2-bert-80M-32k-retrieval","sentence-transformers/msmarco-bert-base-dot-v5"],
         # List embbeding: https://docs.together.ai/docs/embedding-models
         "KEY": TOGETHER_KEY
 
     },
     "GEMINI":{
-        "CHAT_MODELS":["models/gemini-1.5-pro-latest","models/gemini-pro","models/gemini-pro-vision"],
+        "CHAT_MODELS":["models/gemini-pro","models/gemini-1.5-pro-latest","models/gemini-pro-vision"],
         "EMBBEDDING_MODELS":[],
         "KEY": GEMINI_KEY
         # List model: https://ai.google.dev/models/gemini
@@ -106,7 +106,7 @@ supported_services = {
     },
     "QDRANT":{
         "CHAT_MODELS":[],
-        "EMBBEDDING_MODELS":["BAAI/bge-small-en-v1.5","sentence-transformers/all-MiniLM-L6-v2","nomic-ai/nomic-embed-text-v1.5","BAAI/bge-base-en-v1.5","mixedbread-ai/mxbai-embed-large-v1"],
+        "EMBBEDDING_MODELS":["BAAI/bge-small-en-v1.5","sentence-transformers/all-MiniLM-L6-v2","BAAI/bge-base-en-v1.5","nomic-ai/nomic-embed-text-v1.5","mixedbread-ai/mxbai-embed-large-v1"],
         "KEY": ""
         # Qdrant Embedding: https://qdrant.github.io/fastembed/examples/Supported_Models/
     },

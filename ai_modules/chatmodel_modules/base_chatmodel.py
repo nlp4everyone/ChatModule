@@ -4,6 +4,8 @@ from system_component.system_logging import Logger
 
 class BaseChatModel():
     def __init__(self,temperature: float = 0.8,max_tokens :int = 512):
+        """Define general method for chatmodel service"""
+
         # Default params
         self.temperature = temperature
         self.max_tokens = max_tokens
@@ -13,7 +15,7 @@ class BaseChatModel():
         # Default model
         self._chat_model = None
 
-    def _chat_template(self,system_prompt:str,user_prompt:str):
+    def _chat_template(self,system_prompt :str,user_prompt :str):
         # Define chat template for chat
         return [
             ChatMessage(role="system", content=system_prompt),
@@ -24,7 +26,7 @@ class BaseChatModel():
         # Return chat model
         return self._chat_model
 
-    def chat(self,user_prompt:str,system_prompt: str = "",streaming:bool = False) :
+    def chat(self,user_prompt :str,system_prompt: str = "",streaming :bool = False) :
         # Check state
         if self._chat_model == None:
             exception_message = "Chat model cannot be None"

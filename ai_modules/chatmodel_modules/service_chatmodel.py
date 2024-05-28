@@ -22,6 +22,7 @@ class ServiceChatModel(BaseChatModel):
                  service_name: Union[ServiceChatModelProvider,str] = ServiceChatModelProvider.GEMINI,
                  temperature: float = 0.8,
                  max_tokens :int = 512 ):
+        """Define embedding service with specified params"""
         super().__init__(temperature = temperature,max_tokens = max_tokens)
 
         # Service support
@@ -37,53 +38,82 @@ class ServiceChatModel(BaseChatModel):
 
         # Default model
         self._chat_model = None
+
         self._model_name = model_name
+        # Default model
+        if model_name == "default":
+            list_models = supported_services[service_name]["CHAT_MODELS"]
+            # Check type
+            if not isinstance(list_models,list) or len(list_models) == 0:
+                raise Exception(f"Wrong list of models")
+            # Take first element
+            self._model_name = list_models[0]
+            # Check name
+            if len(self._model_name) == 0: raise Exception("Model name cant be empty")
+
 
         # Other service
         if service_name == "ANTHROPIC":
             # Install dependency
             from llama_index.llms.anthropic import Anthropic
-            self._chat_model = Anthropic(api_key=self.api_key,max_tokens=self.max_tokens,temperature=self.temperature)
+            self._chat_model = Anthropic(api_key = self.api_key,
+                                         max_tokens = self.max_tokens,
+                                         temperature = self.temperature,
+                                         model = self._model_name)
 
         elif service_name == "COHERE":
             # Install dependency
             from llama_index.llms.cohere import Cohere
-            self._chat_model = Cohere(api_key=self.api_key,max_tokens=self.max_tokens,temperature=self.temperature)
+            self._chat_model = Cohere(api_key = self.api_key,
+                                      max_tokens = self.max_tokens,
+                                      temperature = self.temperature,
+                                      model = self._model_name)
 
         elif service_name == "GRADIENT":
             raise Exception("Temporally not working")
-            # self._chat_model = GradientBaseModelLLM(max_tokens=400,access_token=self.api_key,workspace_id="e27efd0c-635f-4113-bee6-80fec5b3aacd_workspace")
 
         elif service_name == "GROQ":
             # Install dependency
             from llama_index.llms.groq import Groq
-            default_model = "llama3-8b-8192"
-            self._chat_model = Groq(model=default_model,api_key=self.api_key)
+            self._chat_model = Groq(model = self._model_name,
+                                    api_key = self.api_key)
 
         elif service_name == "LLAMAAPI":
-            # Install dependency
-            from llama_index.llms.llama_api import LlamaAPI
-            self._chat_model = LlamaAPI(temperature=self.temperature,max_tokens=self.max_tokens,api_key=self.api_key)
+            raise Exception("Temporally not working")
+            # from llama_index.llms.llama_api import LlamaAPI
+            # self._chat_model = LlamaAPI(temperature=self.temperature,max_tokens=self.max_tokens,api_key=self.api_key)
 
         elif service_name == "OPENAI":
             # Install dependency
             from llama_index.llms.openai import OpenAI
-            self._chat_model = OpenAI(temperature=self.temperature,max_tokens=self.max_tokens,api_key=self.api_key,timeout=15)
+            self._chat_model = OpenAI(model = self._model_name,
+                                      temperature = self.temperature,
+                                      max_tokens = self.max_tokens,
+                                      api_key = self.api_key,
+                                      timeout = 15)
 
         elif service_name == "PERPLEXITY":
             # Install dependency
             from llama_index.llms.perplexity import Perplexity
-            self._chat_model = Perplexity(temperature=self.temperature,max_tokens=self.max_tokens,api_key=self.api_key)
+            self._chat_model = Perplexity(model = self._model_name,
+                                          temperature = self.temperature,
+                                          max_tokens = self.max_tokens,
+                                          api_key = self.api_key)
 
         elif service_name == "TOGETHER":
             # Install dependency
             from llama_index.llms.together import TogetherLLM
-            self._chat_model = TogetherLLM(api_key=self.api_key)
+            self._chat_model = TogetherLLM(model = self._model_name,
+                                           api_key = self.api_key,
+                                           temperature = self.temperature)
 
         elif service_name == "GEMINI":
             # Install dependency
             from llama_index.llms.gemini import Gemini
-            self._chat_model = Gemini(api_key=self.api_key,temperature=self.temperature,max_tokens=self.max_tokens)
+            self._chat_model = Gemini(model_name = self._model_name,
+                                      api_key = self.api_key,
+                                      temperature = self.temperature,
+                                      max_tokens = self.max_tokens)
         else:
             raise Exception(f"Service {service_name} is not supported!")
 
