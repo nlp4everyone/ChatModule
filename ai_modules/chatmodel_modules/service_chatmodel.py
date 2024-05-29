@@ -3,7 +3,7 @@ from typing import Union
 # from llama_index.llms.gradient import GradientBaseModelLLM
 from strenum import StrEnum
 from ai_modules.chatmodel_modules import BaseChatModel
-from system_component import Logger
+from system_components import Logger
 
 class ServiceChatModelProvider(StrEnum):
     ANTHROPIC = "ANTHROPIC",
@@ -26,15 +26,15 @@ class ServiceChatModel(BaseChatModel):
         super().__init__(temperature = temperature,max_tokens = max_tokens)
 
         # Service support
-        self.list_services = list(supported_services.keys())
+        list_services = list(supported_services.keys())
         # Check service available
-        if service_name not in self.list_services:
+        if service_name not in list_services:
             service_exception = f"Service {service_name} is not supported!"
             Logger.exception(service_exception)
             raise Exception(service_exception)
 
         # Define key
-        self.api_key = supported_services[service_name]["KEY"]
+        self._api_key = supported_services[service_name]["KEY"]
 
         # Default model
         self._chat_model = None
@@ -56,7 +56,7 @@ class ServiceChatModel(BaseChatModel):
         if service_name == "ANTHROPIC":
             # Install dependency
             from llama_index.llms.anthropic import Anthropic
-            self._chat_model = Anthropic(api_key = self.api_key,
+            self._chat_model = Anthropic(api_key = self._api_key,
                                          max_tokens = self.max_tokens,
                                          temperature = self.temperature,
                                          model = self._model_name)
@@ -64,7 +64,7 @@ class ServiceChatModel(BaseChatModel):
         elif service_name == "COHERE":
             # Install dependency
             from llama_index.llms.cohere import Cohere
-            self._chat_model = Cohere(api_key = self.api_key,
+            self._chat_model = Cohere(api_key = self._api_key,
                                       max_tokens = self.max_tokens,
                                       temperature = self.temperature,
                                       model = self._model_name)
@@ -76,7 +76,7 @@ class ServiceChatModel(BaseChatModel):
             # Install dependency
             from llama_index.llms.groq import Groq
             self._chat_model = Groq(model = self._model_name,
-                                    api_key = self.api_key)
+                                    api_key = self._api_key)
 
         elif service_name == "LLAMAAPI":
             raise Exception("Temporally not working")
@@ -89,7 +89,7 @@ class ServiceChatModel(BaseChatModel):
             self._chat_model = OpenAI(model = self._model_name,
                                       temperature = self.temperature,
                                       max_tokens = self.max_tokens,
-                                      api_key = self.api_key,
+                                      api_key = self._api_key,
                                       timeout = 15)
 
         elif service_name == "PERPLEXITY":
@@ -98,20 +98,20 @@ class ServiceChatModel(BaseChatModel):
             self._chat_model = Perplexity(model = self._model_name,
                                           temperature = self.temperature,
                                           max_tokens = self.max_tokens,
-                                          api_key = self.api_key)
+                                          api_key = self._api_key)
 
         elif service_name == "TOGETHER":
             # Install dependency
             from llama_index.llms.together import TogetherLLM
             self._chat_model = TogetherLLM(model = self._model_name,
-                                           api_key = self.api_key,
+                                           api_key = self._api_key,
                                            temperature = self.temperature)
 
         elif service_name == "GEMINI":
             # Install dependency
             from llama_index.llms.gemini import Gemini
             self._chat_model = Gemini(model_name = self._model_name,
-                                      api_key = self.api_key,
+                                      api_key = self._api_key,
                                       temperature = self.temperature,
                                       max_tokens = self.max_tokens)
         else:
@@ -119,4 +119,4 @@ class ServiceChatModel(BaseChatModel):
 
 
         # Print message
-        Logger.info(f"Launch {service_name} Chat model with temperature {self.temperature}")
+        Logger.info(f"Launch {service_name} service with chat model {self._model_name}, temperature of {self.temperature}")

@@ -1,8 +1,8 @@
-from typing import Literal,Optional,Union
+from typing import Literal, Union
 from config.params import *
 # from llama_index.embeddings.nomic import NomicEmbedding
 from ai_modules.embedding_modules.base_embedding import BaseEmbedding
-from system_component import Logger
+from system_components import Logger
 
 # Elastic Search Embedding: Notitfy
 class ServiceEmbedding(BaseEmbedding):
@@ -15,9 +15,9 @@ class ServiceEmbedding(BaseEmbedding):
 
         super().__init__(batch_size = batch_size,max_length= max_length)
         # Define variables
-        self.list_services = list(supported_services.keys())
+        list_services = list(supported_services.keys())
         # Check service available
-        if service_name not in self.list_services:
+        if service_name not in list_services:
             Logger.exception(f"Service {service_name} is not supported!")
             raise Exception(f"Service {service_name} is not supported!")
 
@@ -35,29 +35,29 @@ class ServiceEmbedding(BaseEmbedding):
             if len(self._model_name) == 0: raise Exception("Model name cant be empty")
 
         # Define key
-        self.api_key = supported_services[service_name]["KEY"]
+        self._api_key = supported_services[service_name]["KEY"]
         # TOGETHER service
         if service_name == "TOGETHER":
             from llama_index.embeddings.together import TogetherEmbedding
             self._embedding_model = TogetherEmbedding(model_name = self._model_name,
-                                                      api_key = self.api_key)
+                                                      api_key = self._api_key)
 
         elif service_name == "COHERE":
             from llama_index.embeddings.cohere import CohereEmbedding
             self._embedding_model = CohereEmbedding(model_name = self._model_name,
-                                                    cohere_api_key = self.api_key,
+                                                    cohere_api_key = self._api_key,
                                                     embed_batch_size = self.batch_size)
 
         elif service_name == "VOYAGE":
             from llama_index.embeddings.voyageai import VoyageEmbedding
             self._embedding_model = VoyageEmbedding(model_name = self._model_name,
-                                                    voyage_api_key = self.api_key,
+                                                    voyage_api_key = self._api_key,
                                                     embed_batch_size = self.batch_size)
 
         elif service_name == "OPENAI":
             from llama_index.embeddings.openai import OpenAIEmbedding
             self._embedding_model = OpenAIEmbedding(model = self._model_name,
-                                                    api_key = self.api_key,
+                                                    api_key = self._api_key,
                                                     embed_batch_size = self.batch_size)
         elif service_name == "MISTRAL":
             Logger.exception("Mistral currently required charge")
@@ -71,5 +71,5 @@ class ServiceEmbedding(BaseEmbedding):
             raise Exception(service_exception_msg)
 
         #Logging Info
-        Logger.info(f"Launch {service_name} service with model name {self._model_name}!")
+        Logger.info(f"Launch {service_name} service with embedding model {self._model_name}!")
 

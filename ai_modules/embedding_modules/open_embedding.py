@@ -3,7 +3,7 @@ from config import params
 from typing import Optional
 from strenum import StrEnum
 # from llama_index.embeddings.fastembed import FastEmbedEmbedding,base
-from system_component import Logger
+from system_components import Logger
 from ai_modules.embedding_modules import BaseEmbedding
 import os
 

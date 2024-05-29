@@ -1,6 +1,6 @@
 from llama_index.core.llms import ChatMessage
 from typing import Optional
-from system_component.system_logging import Logger
+from system_components.system_logging import Logger
 
 class BaseChatModel():
     def __init__(self,temperature: float = 0.8,max_tokens :int = 512):
