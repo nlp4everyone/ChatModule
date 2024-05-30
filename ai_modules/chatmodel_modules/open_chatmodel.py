@@ -1,9 +1,9 @@
 from llama_index.llms.ollama import Ollama
 from typing import Union
-from ai_modules.chatmodel_modules import BaseChatModel
+from ai_modules.chatmodel_modules import BaseChatModelTemplate
 from system_components import Logger
 
-class OpenChatModel(BaseChatModel):
+class OpenChatModel(BaseChatModelTemplate):
     def __init__(self,
                  model_name: Union[str, None] = "zephyr",
                  temperature: float = 0.8,

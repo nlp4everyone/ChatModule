@@ -1,11 +1,10 @@
 from typing import Literal, Union
 from config.params import *
 # from llama_index.embeddings.nomic import NomicEmbedding
-from ai_modules.embedding_modules.base_embedding import BaseEmbedding
+from ai_modules.embedding_modules.base_embedding import BaseEmbeddingTemplate
 from system_components import Logger
 
-# Elastic Search Embedding: Notitfy
-class ServiceEmbedding(BaseEmbedding):
+class ServiceEmbedding(BaseEmbeddingTemplate):
     def __init__(self,
                  model_name: str = "default",
                  service_name: Union[Literal["COHERE","GRADIENT","MISTRAL","OPENAI","TOGETHER","VOYAGE","NOMIC"],str] = "COHERE",

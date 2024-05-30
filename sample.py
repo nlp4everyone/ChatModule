@@ -1,6 +1,7 @@
 from ai_modules.chatmodel_modules import ServiceChatModel
 from ai_modules.embedding_modules import ServiceEmbedding
+from llama_index.core.llms import ChatMessage
+import asyncio
 
-chat_service = ServiceChatModel(service_name="ANTHROPIC")
-ans = chat_service.chat("Hello")
-print(ans)
+embedding_service = ServiceEmbedding(service_name="COHERE")
+embedding_model = embedding_service.get_embedding_model()

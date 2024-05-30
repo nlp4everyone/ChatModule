@@ -2,7 +2,7 @@ from config.params import *
 from typing import Union
 # from llama_index.llms.gradient import GradientBaseModelLLM
 from strenum import StrEnum
-from ai_modules.chatmodel_modules import BaseChatModel
+from ai_modules.chatmodel_modules import BaseChatModelTemplate
 from system_components import Logger
 
 class ServiceChatModelProvider(StrEnum):
@@ -16,7 +16,7 @@ class ServiceChatModelProvider(StrEnum):
     TOGETHER = "TOGETHER",
     GEMINI = "GEMINI"
 
-class ServiceChatModel(BaseChatModel):
+class ServiceChatModel(BaseChatModelTemplate):
     def __init__(self,
                  model_name: str = "default",
                  service_name: Union[ServiceChatModelProvider,str] = ServiceChatModelProvider.GEMINI,

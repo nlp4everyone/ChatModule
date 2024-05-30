@@ -1,9 +1,12 @@
 from llama_index.core.llms import ChatMessage
 from typing import Optional
 from system_components.system_logging import Logger
+from llama_index.core.llms import LLM,ChatResponse
 
-class BaseChatModel():
-    def __init__(self,temperature: float = 0.8,max_tokens :int = 512):
+class BaseChatModelTemplate():
+    def __init__(self,
+                 temperature: float = 0.8,
+                 max_tokens :int = 512):
         """Define general method for chatmodel service"""
 
         # Default params
@@ -15,18 +18,25 @@ class BaseChatModel():
         # Default model
         self._chat_model = None
 
-    def _chat_template(self,system_prompt :str,user_prompt :str):
+    def _chat_template(self,
+                       system_prompt :str,
+                       user_prompt :str) -> list[ChatMessage]:
+
         # Define chat template for chat
         return [
             ChatMessage(role="system", content=system_prompt),
             ChatMessage(role = "user",content = user_prompt),
         ]
 
-    def get_chat_model(self):
+    def get_chat_model(self) -> LLM:
         # Return chat model
         return self._chat_model
 
-    def chat(self,user_prompt :str,system_prompt: str = "",streaming :bool = False) :
+    def chat(self,
+             user_prompt :str,
+             system_prompt: str = "",
+             streaming :bool = False) -> ChatResponse:
+
         # Check state
         if self._chat_model == None:
             exception_message = "Chat model cannot be None"
@@ -45,7 +55,11 @@ class BaseChatModel():
         self.history.extend(ChatMessage(role="assistant", content=res))
         return res
 
-    async def achat(self, user_prompt: str, system_prompt: Optional[str] = "", streaming:bool = False):
+    async def achat(self,
+                    user_prompt: str,
+                    system_prompt: Optional[str] = "",
+                    streaming:bool = False) -> ChatResponse:
+
         # Check state
         if self._chat_model == None:
             exception_message = "Chat model cannot be None"
