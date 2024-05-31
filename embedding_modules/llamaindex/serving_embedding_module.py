@@ -4,18 +4,18 @@ from typing import Optional
 from strenum import StrEnum
 # from llama_index.embeddings.fastembed import FastEmbedEmbedding,base
 from system_components import Logger
-from ai_modules.embedding_modules import BaseEmbeddingTemplate
+from embedding_modules.llamaindex.base_embedding_module import StandardlizedEmbeddingModule
 import os
 
-class OpenEmbeddingProvider(StrEnum):
+class EmbeddingProvider(StrEnum):
     HuggingFace = "HuggingFace",
     FastEmbed = "FastEmbed",
 
 
-class OpenEmbedding(BaseEmbeddingTemplate):
+class ServingEmbeddingModule(StandardlizedEmbeddingModule):
     def __init__(self,
                  model_name: Optional[str] = None,
-                 service_name: OpenEmbeddingProvider = OpenEmbeddingProvider.FastEmbed,
+                 service_name: EmbeddingProvider = EmbeddingProvider.FastEmbed,
                  batch_size: int = 10,
                  max_length: int = 1024,
                  embedding_model_folder = params.embedding_model_folder):
@@ -31,12 +31,12 @@ class OpenEmbedding(BaseEmbeddingTemplate):
 
         service_unsupported_msg = "HuggingFace temporally turned off"
         # Hugging Face
-        if service_name == OpenEmbeddingProvider.HuggingFace:
+        if service_name == EmbeddingProvider.HuggingFace:
             # self._embedding_model = HuggingFaceEmbedding(cache_folder=self._embedding_model_folder,embed_batch_size=self.batch_size)
             Logger.exception(service_unsupported_msg)
             raise Exception(service_unsupported_msg)
         # Fast Embed
-        elif service_name == OpenEmbeddingProvider.FastEmbed:
+        elif service_name == EmbeddingProvider.FastEmbed:
             service_unsupported_msg = "FastEmbed temporally turned off"
             Logger.exception(service_unsupported_msg)
             raise Exception(service_unsupported_msg)

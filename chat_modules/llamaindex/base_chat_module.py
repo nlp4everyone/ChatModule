@@ -3,7 +3,7 @@ from typing import Optional
 from system_components.system_logging import Logger
 from llama_index.core.llms import LLM,ChatResponse
 
-class BaseChatModelTemplate():
+class StandardlizedChatModule():
     def __init__(self,
                  temperature: float = 0.8,
                  max_tokens :int = 512):

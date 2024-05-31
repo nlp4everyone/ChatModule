@@ -2,10 +2,10 @@ from config.params import *
 from typing import Union
 # from llama_index.llms.gradient import GradientBaseModelLLM
 from strenum import StrEnum
-from ai_modules.chatmodel_modules import BaseChatModelTemplate
+from chat_modules.llamaindex.base_chat_module import StandardlizedChatModule
 from system_components import Logger
 
-class ServiceChatModelProvider(StrEnum):
+class ChatModelProvider(StrEnum):
     ANTHROPIC = "ANTHROPIC",
     COHERE = "COHERE",
     GRADIENT = "GRADIENT",
@@ -16,10 +16,10 @@ class ServiceChatModelProvider(StrEnum):
     TOGETHER = "TOGETHER",
     GEMINI = "GEMINI"
 
-class ServiceChatModel(BaseChatModelTemplate):
+class ServiceChatModule(StandardlizedChatModule):
     def __init__(self,
                  model_name: str = "default",
-                 service_name: Union[ServiceChatModelProvider,str] = ServiceChatModelProvider.GEMINI,
+                 service_name: Union[ChatModelProvider,str] = ChatModelProvider.GEMINI,
                  temperature: float = 0.8,
                  max_tokens :int = 512 ):
         """Define embedding service with specified params"""
