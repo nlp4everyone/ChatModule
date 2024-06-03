@@ -14,7 +14,7 @@ class ServiceEmbeddingModule(StandardlizedEmbeddingModule):
 
         super().__init__(batch_size = batch_size,max_length= max_length)
         # Define variables
-        list_services = list(supported_services.keys())
+        list_services = list(llamaindex_services.keys())
         # Check service available
         if service_name not in list_services:
             Logger.exception(f"Service {service_name} is not supported!")
@@ -24,7 +24,7 @@ class ServiceEmbeddingModule(StandardlizedEmbeddingModule):
         # Get model name
         if model_name == "default":
             # List models
-            list_models = supported_services[service_name]["EMBBEDDING_MODELS"]
+            list_models = llamaindex_services[service_name]["EMBBEDDING_MODELS"]
             # Check list
             if not isinstance(list_models,list) or len(list_models) == 0:
                 raise Exception(f"Wrong list of models")
@@ -34,7 +34,7 @@ class ServiceEmbeddingModule(StandardlizedEmbeddingModule):
             if len(self._model_name) == 0: raise Exception("Model name cant be empty")
 
         # Define key
-        self._api_key = supported_services[service_name]["KEY"]
+        self._api_key = llamaindex_services[service_name]["KEY"]
         # TOGETHER service
         if service_name == "TOGETHER":
             from llama_index.embeddings.together import TogetherEmbedding

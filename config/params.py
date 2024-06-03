@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-import os
+import os,json
 load_dotenv()
 cache_folder = "cache_folder"
 embedding_model_folder = os.path.join(cache_folder,"embedding_model")
@@ -8,6 +8,8 @@ embedding_model_folder = os.path.join(cache_folder,"embedding_model")
 # Define params
 embedding_service = "COHERE"
 embedding_model_name = "embed-english-light-v3.0"
+chat_service = "GEMINI"
+chat_model = "models/gemini-pro"
 
 # Model config
 AI21_KEY = os.getenv("AI21_KEY")
@@ -26,100 +28,25 @@ VOYAGE_KEY = os.getenv("VOYAGE_KEY") # Free for 50M first tokens
 NOMIC_KEY = os.getenv("NOMIC_KEY") # Free for 50M first tokens
 LLAMAPARSE_KEY = os.getenv("LLAMAPARSE_KEY") # https://cloud.llamaindex.ai/parse
 
+# Load service
+if not os.path.exists("config/llama_index_config.json"):
+    raise Exception("Llama index config is not existed!")
 
+# Load config
+with open("config/llama_index_config.json",'r') as f:
+    llamaindex_services = json.load(f)
 
-# Define service
-supported_services = {
-    "AI21":{
-        "CHAT_MODELS":[],
-        "EMBBEDDING_MODELS":[],
-        "KEY" : AI21_KEY
-    },
-    "ANTHROPIC":{
-        "CHAT_MODELS":["claude-3-haiku-20240307","claude-3-sonnet-20240229","claude-3-opus-20240229",],
-        "EMBBEDDING_MODELS":[],
-        "KEY": ANTHROPIC_KEY
-        # List models: https://docs.anthropic.com/claude/docs/models-overview
-    },
-    "CLARIFAI":{
-        "CHAT_MODELS":[],
-        "EMBBEDDING_MODELS":[],
-        "KEY": CLARIFAI_KEY
-    },
-    "COHERE":{
-        "CHAT_MODELS":["command-light","command","command-r","command-r-plus"],
-        # List models: https://docs.cohere.com/docs/command-beta
-        "EMBBEDDING_MODELS":["embed-english-light-v3.0","embed-multilingual-light-v3.0","embed-english-v3.0","embed-multilingual-v3.0",],
-        # List embbeding: https://docs.cohere.com/reference/embed
-        "KEY": COHERE_KEY
-
-    },
-    "GRADIENT":{
-        "CHAT_MODELS":[],
-        "EMBBEDDING_MODELS":[],
-        "KEY": GRADIENT_KEY
-    },
-    "GROQ":{
-        "CHAT_MODELS":["llama3-8b-8192","gemma-7b-it","mixtral-8x7b-32768","llama3-70b-8192"],
-        "EMBBEDDING_MODELS":[],
-        "KEY": GROQ_KEY
-    },
-
-    "KONKO":{
-        "CHAT_MODELS":["meta-llama/llama-2-13b-chat","mistralai/mixtral-8x7b-instruct-v0.1","zero-one-ai/yi-34b-chat"],
-        "EMBBEDDING_MODELS":[],
-        "KEY": KONKO_KEY
-        # List model: https://docs.konko.ai/docs/list-of-models
-    },
-    "LLAMAAPI":{
-        "CHAT_MODELS":[],
-        "EMBBEDDING_MODELS":[],
-        "KEY": LLAMAAPI_KEY
-    },
-    "OPENAI":{
-        "CHAT_MODELS":["gpt-3.5-turbo-0125","gpt-3.5-turbo-instruct","gpt-4","gpt-4-32k","gpt-4-0125-preview","gpt-4-turbo-2024-04-09",],
-        "EMBBEDDING_MODELS":["text-embedding-ada-002","text-embedding-3-small","text-embedding-3-large"],
-        "KEY": OPENAI_KEY
-        # List model: https://platform.openai.com/docs/models/continuous-model-upgrades
-        # List embedding: https://platform.openai.com/docs/models/embeddings
-    },
-    "PERPLEXITY":{
-        "CHAT_MODELS":["mistral-7b-instruct","pplx-7b-chat-alpha","llama-2-13b-chat","llama-2-70b-chat","pplx-70b-chat-alpha"],
-        "EMBBEDDING_MODELS":[],
-        "KEY": PERPLEXITY_KEY
-        # List model: https://docs.perplexity.ai/docs/model-cards
-    },
-    "TOGETHER":{
-        "CHAT_MODELS":["zero-one-ai/Yi-34B-Chat","cognitivecomputations/dolphin-2.5-mixtral-8x7b","mistralai/Mistral-7B-Instruct-v0.2","NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO","Qwen/Qwen1.5-32B-Chat"],
-        # List model: https://docs.together.ai/docs/inference-models
-        "EMBBEDDING_MODELS":["BAAI/bge-base-en-v1.5","BAAI/bge-large-en-v1.5","togethercomputer/m2-bert-80M-8k-retrieval","togethercomputer/m2-bert-80M-32k-retrieval","sentence-transformers/msmarco-bert-base-dot-v5"],
-        # List embbeding: https://docs.together.ai/docs/embedding-models
-        "KEY": TOGETHER_KEY
-
-    },
-    "GEMINI":{
-        "CHAT_MODELS":["models/gemini-pro","models/gemini-1.5-pro-latest","models/gemini-pro-vision"],
-        "EMBBEDDING_MODELS":[],
-        "KEY": GEMINI_KEY
-        # List model: https://ai.google.dev/models/gemini
-        # Gemini Pro 60 requests/min
-    },
-    "QDRANT":{
-        "CHAT_MODELS":[],
-        "EMBBEDDING_MODELS":["BAAI/bge-small-en-v1.5","sentence-transformers/all-MiniLM-L6-v2","BAAI/bge-base-en-v1.5","nomic-ai/nomic-embed-text-v1.5","mixedbread-ai/mxbai-embed-large-v1"],
-        "KEY": ""
-        # Qdrant Embedding: https://qdrant.github.io/fastembed/examples/Supported_Models/
-    },
-    "VOYAGE":{
-        "CHAT_MODELS":[],
-        "EMBBEDDING_MODELS":["voyage-2","voyage-large-2","voyage-law-2","voyage-code-2"],
-        "KEY": VOYAGE_KEY
-        # Embedding: https://docs.voyageai.com/docs/pricing
-    },
-    "NOMIC":{
-        "CHAT_MODELS":[],
-        "EMBBEDDING_MODELS":["nomic-embed-text-v1","nomic-embed-text-v1.5"],
-        "KEY": NOMIC_KEY
-        # Embedding: https://docs.nomic.ai/atlas/models/text-embedding
-    }
-}
+# Add key service
+llamaindex_services["AI21"]["KEY"] = AI21_KEY
+llamaindex_services["ANTHROPIC"]["KEY"] = ANTHROPIC_KEY # List models: https://docs.anthropic.com/claude/docs/models-overview
+llamaindex_services["CLARIFAI"]["KEY"] = CLARIFAI_KEY
+llamaindex_services["COHERE"]["KEY"] = COHERE_KEY # List models: https://docs.cohere.com/docs/command-beta  List embbeding: https://docs.cohere.com/reference/embed
+llamaindex_services["GRADIENT"]["KEY"] = GRADIENT_KEY
+llamaindex_services["GROQ"]["KEY"] = GROQ_KEY
+llamaindex_services["OPENAI"]["KEY"] = OPENAI_KEY # List model: https://platform.openai.com/docs/models/continuous-model-upgrades
+llamaindex_services["PERPLEXITY"]["KEY"] = PERPLEXITY_KEY # List model: https://docs.perplexity.ai/docs/model-cards
+llamaindex_services["TOGETHER"]["KEY"] = TOGETHER_KEY  # List model: https://docs.together.ai/docs/inference-models
+llamaindex_services["GEMINI"]["KEY"] = GEMINI_KEY # List model: https://ai.google.dev/models/gemini
+llamaindex_services["QDRANT"]["KEY"] = ""  # Qdrant Embedding: https://qdrant.github.io/fastembed/examples/Supported_Models/
+llamaindex_services["VOYAGE"]["KEY"] = VOYAGE_KEY  # Embedding: https://docs.voyageai.com/docs/pricing
+llamaindex_services["NOMIC"]["KEY"] = NOMIC_KEY # Embedding: https://docs.nomic.ai/atlas/models/text-embedding
