@@ -3,7 +3,7 @@ from typing import Union
 from chat_modules.llamaindex.base_chat_module import StandardlizedChatModule
 from system_components import Logger
 
-class ServingChatModule(StandardlizedChatModule):
+class OllamaChatModule(StandardlizedChatModule):
     def __init__(self,
                  model_name: Union[str, None] = "zephyr",
                  temperature: float = 0.8,

@@ -16,13 +16,17 @@ class ChatModelProvider(StrEnum):
     TOGETHER = "TOGETHER",
     GEMINI = "GEMINI"
 
-class ServiceChatModule(StandardlizedChatModule):
+class IntergrationsChatModule(StandardlizedChatModule):
     def __init__(self,
                  model_name: str = "default",
                  service_name: Union[ChatModelProvider,str] = ChatModelProvider.GEMINI,
                  temperature: float = 0.8,
                  max_tokens :int = 512 ):
-        """Define embedding service with specified params"""
+        """Define embedding service with specified params
+        - model_name: str. Default is default
+        - service_name: LLM Providers. Must be OpenAI, Anthoripic, etc
+        - temperature:  a parameter that influences the language model's output, determining whether the output is more random and creative or more predictable
+        """
         super().__init__(temperature = temperature,max_tokens = max_tokens)
 
         # Service support
