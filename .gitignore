@@ -1,5 +1,6 @@
 .env
 .idea/
+__pycache__/
 config/__pycache__
 chat_modules/llamaindex/intergrations/__pycache__/
 chat_modules/llamaindex/__pycache__/
