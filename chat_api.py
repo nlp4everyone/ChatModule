@@ -2,15 +2,14 @@ from memory_module import ChatMemory
 from chat_modules.llamaindex.intergrations import IntergrationsChatModule
 from llama_index.core.chat_engine import SimpleChatEngine
 from llama_index.storage.chat_store.redis import RedisChatStore
-from typing import Union
 from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
+import os
 
 # Default params
 session_key = "user_12345"
-
 # Define chat storing service
-chat_store = RedisChatStore()
+chat_store = RedisChatStore(redis_url = "redis://redis-chat-database:6379")
 # Define memory
 chat_memory = ChatMemory.get_session_memory(chat_store = chat_store, session_key = session_key)
 

@@ -7,4 +7,4 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY . .
-CMD ["uvicorn","chat_api:app","--port","8080"]
+CMD ["uvicorn","chat_api:app","--host","0.0.0.0","--port","8080"]
