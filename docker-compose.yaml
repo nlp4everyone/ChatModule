@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  redis-chat-database:
+    container_name: Redis-chat-db
+    image: redis:7.4-rc1-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - /redis_db
+
+  api:
+    container_name: api
+    build: .
+    ports:
+      - "8080:8080"
+volumes:
+  redis_db:

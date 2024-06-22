@@ -1,0 +1,1 @@
+docker compose -p chat_application up
