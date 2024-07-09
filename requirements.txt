@@ -15,6 +15,3 @@ google-generativeai
 # Storing
 llama-index-storage-chat-store-redis
 
-# API
-fastapi
-uvicorn

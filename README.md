@@ -6,15 +6,9 @@ bash install_modules.sh
 
 pip install -r requirements.txt
 
-uvicorn chat_api:app --port 8080
-
-
-# 📦 For running docker, type:
-bash run_docker.sh
-
-# 🔑 Access API: 
-http://0.0.0.0:8080/docs
+# 🏃 For run chat ui, type:
+bash run_chat.sh
 
 # 📺 Demo:
-https://github.com/nlp4everyone/ChatModule/assets/150988243/71a53ff2-503e-430c-a6fa-f207aa1abb44
+https://github.com/nlp4everyone/ChatModule/assets/150988243/5b7d2687-0d00-4fef-ae01-5ca4eb03d969
 
