@@ -34,19 +34,19 @@ if not os.path.exists("config/llama_index_config.json"):
 
 # Load config
 with open("config/llama_index_config.json",'r') as f:
-    llamaindex_services = json.load(f)
+    supported_services = json.load(f)
 
 # Add key service
-llamaindex_services["AI21"]["KEY"] = AI21_KEY
-llamaindex_services["ANTHROPIC"]["KEY"] = ANTHROPIC_KEY # List models: https://docs.anthropic.com/claude/docs/models-overview
-llamaindex_services["CLARIFAI"]["KEY"] = CLARIFAI_KEY
-llamaindex_services["COHERE"]["KEY"] = COHERE_KEY # List models: https://docs.cohere.com/docs/command-beta  List embbeding: https://docs.cohere.com/reference/embed
-llamaindex_services["GRADIENT"]["KEY"] = GRADIENT_KEY
-llamaindex_services["GROQ"]["KEY"] = GROQ_KEY
-llamaindex_services["OPENAI"]["KEY"] = OPENAI_KEY # List model: https://platform.openai.com/docs/models/continuous-model-upgrades
-llamaindex_services["PERPLEXITY"]["KEY"] = PERPLEXITY_KEY # List model: https://docs.perplexity.ai/docs/model-cards
-llamaindex_services["TOGETHER"]["KEY"] = TOGETHER_KEY  # List model: https://docs.together.ai/docs/inference-models
-llamaindex_services["GEMINI"]["KEY"] = GEMINI_KEY # List model: https://ai.google.dev/models/gemini
-llamaindex_services["QDRANT"]["KEY"] = ""  # Qdrant Embedding: https://qdrant.github.io/fastembed/examples/Supported_Models/
-llamaindex_services["VOYAGE"]["KEY"] = VOYAGE_KEY  # Embedding: https://docs.voyageai.com/docs/pricing
-llamaindex_services["NOMIC"]["KEY"] = NOMIC_KEY # Embedding: https://docs.nomic.ai/atlas/models/text-embedding
+supported_services["AI21"]["KEY"] = AI21_KEY
+supported_services["ANTHROPIC"]["KEY"] = ANTHROPIC_KEY # List models: https://docs.anthropic.com/claude/docs/models-overview
+supported_services["CLARIFAI"]["KEY"] = CLARIFAI_KEY
+supported_services["COHERE"]["KEY"] = COHERE_KEY # List models: https://docs.cohere.com/docs/command-beta  List embbeding: https://docs.cohere.com/reference/embed
+supported_services["GRADIENT"]["KEY"] = GRADIENT_KEY
+supported_services["GROQ"]["KEY"] = GROQ_KEY
+supported_services["OPENAI"]["KEY"] = OPENAI_KEY # List model: https://platform.openai.com/docs/models/continuous-model-upgrades
+supported_services["PERPLEXITY"]["KEY"] = PERPLEXITY_KEY # List model: https://docs.perplexity.ai/docs/model-cards
+supported_services["TOGETHER"]["KEY"] = TOGETHER_KEY  # List model: https://docs.together.ai/docs/inference-models
+supported_services["GEMINI"]["KEY"] = GEMINI_KEY # List model: https://ai.google.dev/models/gemini
+supported_services["QDRANT"]["KEY"] = ""  # Qdrant Embedding: https://qdrant.github.io/fastembed/examples/Supported_Models/
+supported_services["VOYAGE"]["KEY"] = VOYAGE_KEY  # Embedding: https://docs.voyageai.com/docs/pricing
+supported_services["NOMIC"]["KEY"] = NOMIC_KEY # Embedding: https://docs.nomic.ai/atlas/models/text-embedding
