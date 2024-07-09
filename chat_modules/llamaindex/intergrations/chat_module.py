@@ -30,7 +30,7 @@ class IntergrationsChatModule(StandardlizedChatModule):
         super().__init__(temperature = temperature,max_tokens = max_tokens)
 
         # Service support
-        list_services = list(llamaindex_services.keys())
+        list_services = list(supported_services.keys())
         # Check service available
         if service_name not in list_services:
             service_exception = f"Service {service_name} is not supported!"
@@ -38,7 +38,7 @@ class IntergrationsChatModule(StandardlizedChatModule):
             raise Exception(service_exception)
 
         # Define key
-        self._api_key = llamaindex_services[service_name]["KEY"]
+        self._api_key = supported_services[service_name]["KEY"]
 
         # Default model
         self._chat_model = None
@@ -46,7 +46,7 @@ class IntergrationsChatModule(StandardlizedChatModule):
         self._model_name = model_name
         # Default model
         if model_name == "default":
-            list_models = llamaindex_services[service_name]["CHAT_MODELS"]
+            list_models = supported_services[service_name]["CHAT_MODELS"]
             # Check type
             if not isinstance(list_models,list) or len(list_models) == 0:
                 raise Exception(f"Wrong list of models")

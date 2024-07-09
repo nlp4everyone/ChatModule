@@ -1,7 +1,10 @@
 .env
 .idea/
-config/__pycache__
+chainlit.md
 chat_modules/llamaindex/intergrations/__pycache__/
 chat_modules/llamaindex/__pycache__/
 memory_module/__pycache__/
+config/__pycache__
+__pycache__/
 system_components
+.chainlit/
