@@ -15,5 +15,3 @@ google-generativeai
 # Storing
 llama-index-storage-chat-store-redis
 
-#
-chainlit
